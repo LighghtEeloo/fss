@@ -1,4 +1,6 @@
-local lfs = require("lfs")
+local fs = require("pl.path")
+local self_dir = fs.dirname(fs.abspath(arg[0]))
+package.path = package.path..";"..fs.join(self_dir, "?.lua")
 local rc = require("rc")
 local utils = require("utils")
 
@@ -50,7 +52,7 @@ local function search(pat, base, depth)
     local memo = {}
     local res = {}
     if depth_limit(depth) then return res end
-    for face in lfs.dir(base) do
+    for face in fs.dir(base) do
         if noticeable(base, face) then
             local path = base..'/'..face
             if pat:match(path) then
@@ -86,14 +88,14 @@ local function main()
         table.insert(pats, pat)
     end
     if #arg < 2 then
-        arg[2] = "."
+        arg[2] = fs.currentdir()
     end
     local res = {}
     for _, pat in ipairs(pats) do
         for i=2,#arg do
             local path = arg[i]
             if not starts_with(arg[i], '/') then
-                path = lfs.currentdir()..'/'..path
+                path = fs.currentdir()..'/'..path
             end
             local res_ = search(pat, path)
             for _, path_ in ipairs(res_) do
