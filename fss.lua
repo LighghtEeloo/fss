@@ -2,55 +2,28 @@ local lfs = require("lfs")
 local rc = require("rc")
 local utils = require("utils")
 
-local is_white = rc.is_white
-local is_black = rc.is_black
+local noticeable = rc.noticeable
+local expandable = rc.expandable
+local depth_limit = rc.depth_limit
 
 local starts_with = utils.starts_with
 local split = utils.split
-local is_dir = utils.is_dir
-
 
 HOME = "/home/lighght"
 VERBOSE = false
 
 
-local function depth_limit(depth)
-    return depth > 5
-end
-
-local function is_unimportant(face)
-    return starts_with(face, '.')
-        or starts_with(face, '_')
-end
-
-local function is_important(face)
-    return not is_unimportant(face)
-end
-
-local function is_capitalized(face)
-    local c = face:sub(1, 1)
-    return c >= 'A' and c <= 'Z'
-end
-
-local function is_concise(face)
-    return #face < 16
-end
-
-
 -- pattern search under path
-local function search(pat, path, depth)
+local function search(pat, base, depth)
     depth = depth or 1
     if depth_limit(depth) then return end
-    if VERBOSE then io.stdout:write(">>>>>> "..path.."\n") end
+    if VERBOSE then io.stdout:write(">>>>>> "..base.."\n") end
     local memo = {}
-    for face in lfs.dir(path) do
-        if is_dir(path, face)
-        and is_important(face)
-        and (is_concise(face) or is_white(face))
-        and not is_black(face) then
+    for face in lfs.dir(base) do
+        if noticeable(base, face) then
             print(face)
-            if is_capitalized(face) then
-                table.insert(memo, path..'/'..face)
+            if expandable(base, face) then
+                table.insert(memo, base..'/'..face)
             end
         end
     end
@@ -71,7 +44,7 @@ local function main()
         io.stderr:write("      \t<name>    ::= <file name>\n")
         return 1
     end
-    local pat = split(arg[1])
+    local pat = split(arg[1], ".")
     if #arg < 2 then
         arg[2] = "."
     end
