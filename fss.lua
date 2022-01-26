@@ -1,19 +1,21 @@
 local lfs = require("lfs")
+local rc = require("rc")
+local utils = require("utils")
+
+local is_white = rc.is_white
+local is_black = rc.is_black
+
+local starts_with = utils.starts_with
+local split = utils.split
+local is_dir = utils.is_dir
+
 
 HOME = "/home/lighght"
 VERBOSE = false
 
-local function starts_with(str, start)
-    return str:sub(1, #start) == start
-end
 
-local function split(inputstr, sep)
-    sep = sep or ","
-    local t = {}
-    for str in string.gmatch(inputstr, "([^"..sep.."]*)") do
-        table.insert(t, str)
-    end
-    return t
+local function depth_limit(depth)
+    return depth > 5
 end
 
 local function is_unimportant(face)
@@ -34,38 +36,11 @@ local function is_concise(face)
     return #face < 16
 end
 
-local function is_white(face)
-    return face:find("Lib")
-end
-
-local function is_black(face)
-    return face:find("DualEeloo")
-end
-
-
-local function face_mode(base, face)
-    local path = base..'/'..face
-    if lfs.attributes(path) then
-        return lfs.attributes(path).mode
-    end
-    return nil
-end
-
-local function is_dir(base, face)
-    local mode = face_mode(base, face)
-    return mode and mode == "directory"
-end
-
--- local function is_file(base, face)
---     local mode = face_mode(base, face)
---     return mode and mode == "file"
--- end
-
 
 -- pattern search under path
 local function search(pat, path, depth)
     depth = depth or 1
-    if depth > 4 then return end
+    if depth_limit(depth) then return end
     if VERBOSE then io.stdout:write(">>>>>> "..path.."\n") end
     local memo = {}
     for face in lfs.dir(path) do
