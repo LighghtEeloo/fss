@@ -10,7 +10,6 @@ local starts_with = utils.starts_with
 local split = utils.split
 
 HOME = "/home/lighght"
-VERBOSE = false
 
 Pattern = {}
 
@@ -34,25 +33,40 @@ function Pattern:match(path)
     return true
 end
 
+function Pattern:match_memo(memo)
+    local res = {}
+    for _, path in ipairs(memo) do
+        if self:match(path) then
+            table.insert(res, path)
+        end
+    end
+    return res
+end
+
 
 -- pattern search under path
 local function search(pat, base, depth)
     depth = depth or 1
-    if depth_limit(depth) then return end
-    if VERBOSE then io.stdout:write(">>>>>> "..base.."\n") end
     local memo = {}
+    local res = {}
+    if depth_limit(depth) then return res end
     for face in lfs.dir(base) do
         if noticeable(base, face) then
-            print(face)
-            if expandable(base, face) then
-                table.insert(memo, base..'/'..face)
+            local path = base..'/'..face
+            if pat:match(path) then
+                table.insert(res, path)
+            elseif expandable(base, face) then
+                table.insert(memo, path)
             end
         end
     end
-    if VERBOSE then io.stdout:write("<<<<<<\n") end
     for _, path in ipairs(memo) do
-        search(pat, path, depth + 1)
+        local memo_ = search(pat, path, depth + 1)
+        for _, path_ in ipairs(memo_) do
+            table.insert(res, path_)
+        end
     end
+    return res
 end
 
 
@@ -66,25 +80,30 @@ local function main()
         io.stderr:write("      \t<name>    ::= <file name>\n")
         return 1
     end
-    local pats = split(arg[1], ",")
+    local pats = {}
+    for _, p in ipairs(split(arg[1], ",")) do
+        local pat = Pattern:new(p)
+        table.insert(pats, pat)
+    end
     if #arg < 2 then
         arg[2] = "."
     end
-    for i=2,#arg do
-        local path = arg[i]
-        if not starts_with(arg[i], '/') then
-            path = lfs.currentdir()..'/'..path
+    local res = {}
+    for _, pat in ipairs(pats) do
+        for i=2,#arg do
+            local path = arg[i]
+            if not starts_with(arg[i], '/') then
+                path = lfs.currentdir()..'/'..path
+            end
+            local res_ = search(pat, path)
+            for _, path_ in ipairs(res_) do
+                table.insert(res, path_)
+            end
         end
-        search(pats, path)
     end
-    for _, p in ipairs(pats) do
-        io.stdout:write("\""..p.."\"\n")
+    for _, r in ipairs(res) do
+        print(r)
     end
-    -- for i, p in ipairs(pats) do
-    --     Pattern:new(p)
-    --     local pat = Pattern:new(p)
-    --     print(pat:match("Xpace/EECS-390"))
-    -- end
 end
 
 -- run main
