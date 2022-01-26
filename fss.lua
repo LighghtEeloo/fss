@@ -12,6 +12,28 @@ local split = utils.split
 HOME = "/home/lighght"
 VERBOSE = false
 
+Pattern = {}
+
+function Pattern:new(cons)
+    local pat = split(cons, ".")
+    setmetatable(pat, self)
+    self.__index = self
+    return pat
+end
+
+function Pattern:match(path)
+    local len
+    for _, p in ipairs(self) do
+        _, len = path:find(p)
+        if len then
+            path = path:sub(len+1, #path)
+        else
+            return false
+        end
+    end
+    return true
+end
+
 
 -- pattern search under path
 local function search(pat, base, depth)
@@ -44,7 +66,7 @@ local function main()
         io.stderr:write("      \t<name>    ::= <file name>\n")
         return 1
     end
-    local pat = split(arg[1], ".")
+    local pats = split(arg[1], ",")
     if #arg < 2 then
         arg[2] = "."
     end
@@ -53,11 +75,16 @@ local function main()
         if not starts_with(arg[i], '/') then
             path = lfs.currentdir()..'/'..path
         end
-        search(pat, path)
+        search(pats, path)
     end
-    for _, p in ipairs(pat) do
+    for _, p in ipairs(pats) do
         io.stdout:write("\""..p.."\"\n")
     end
+    -- for i, p in ipairs(pats) do
+    --     Pattern:new(p)
+    --     local pat = Pattern:new(p)
+    --     print(pat:match("Xpace/EECS-390"))
+    -- end
 end
 
 -- run main
