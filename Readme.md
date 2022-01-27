@@ -1,22 +1,42 @@
 # fss
 
-is a short lua implementation for lightweight fs search.
+is a short lua utility for lightweight daily fs search.
 
 ## is not
 
-fss is not:
 - `find`, `fd`: don't provide powerful options or search speed
 - `grep`, `rg`: use extremely plain parsing rules, limited for only daily usage
 
 ## setup
 
 ```bash
+# install via luarocks or clone and directly use
 luarocks install fss
+```
+
+to customize yourself,
+
+```bash
+# config
+CONFIG=$(HOME)/.config/fss
+mkdir $CONFIG && cd $CONFIG
+touch rc.lua
+```
+
+in `rc.lua`:
+
+```lua
+-- write three functions according to the rc manual below.
+return {
+    noticeable = noticeable,
+    expandable = expandable,
+    depth_limit = depth_limit,
+}
 ```
 
 ## man
 
-Note `{}` means repeat 0 or any times, ` | ` means either.
+note `{}` means repeat 0 or any times, ` | ` means either.
 
 ```
 usage:  fss <PATTERNS> <PATH>{ <PATH>}
@@ -47,7 +67,7 @@ means:  given a group of patterns,
 
 ## deps
 
-*Normally one won't need these. Luarocks should have taken care of these.*
+*normally one won't need these. Luarocks should have taken care of these*
 
 Penlight is the battery for lua, like `std` for C++ and Rust or `core` for OCaml.
 
