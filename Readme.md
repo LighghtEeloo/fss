@@ -22,13 +22,13 @@ Note `{}` means repeat 0 or any times, ` | ` means either.
 usage:  fss <PATTERNS> <PATH>{ <PATH>}
 where:  <PATH>     ::= / | /<name>{/<name>} | <name>{/<name>}
         <PATTERNS> ::= <PATTERN>{,<PATTERN>}
-        <PATTERN>  ::= <cstr>{.<cstr>
+        <PATTERN>  ::= <cstr>{.<cstr>}
         <cstr>     ::= <consecutive str>
         <name>     ::= <file name>
       
 means:  given a group of patterns, 
-     :  use each pattern to search in all paths recursively;
-     :  and output the combined results in stdout.
+        use each pattern to search in all paths recursively;
+        and output the combined results in stdout.
       
  also:  if one path already satisfies, its children will not be included
       
