@@ -1,8 +1,8 @@
 package = "fss"
-version = "0.1.0-1"
+version = "1.0.0-1"
 source = {
    url = "git://github.com/LighghtEeloo/fss",
-   tag = "v0.1.0-1"
+   tag = "v1.0.0-1"
 }
 description = {
    summary = "Lightweight cmdline fs search.",
@@ -38,8 +38,12 @@ dependencies = {
 build = {
    type = "builtin",
    modules = {
-      fss = "fss.lua",
       rc = "rc.lua",
       utils = "utils.lua"
+   },
+   install = {
+      bin = {
+         [ "fss" ] = "fss"
+      }
    }
 }
