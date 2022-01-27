@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 local fs = require("pl.path")
 local self_dir = fs.dirname(fs.abspath(arg[0]))
 package.path = package.path..";"..fs.join(self_dir, "?.lua")
