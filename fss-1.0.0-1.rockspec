@@ -39,7 +39,6 @@ build = {
    type = "builtin",
    modules = {
       rc = "rc.lua",
-      utils = "utils.lua"
    },
    install = {
       bin = {

@@ -1,7 +1,5 @@
-local utils = require("utils")
-
-local starts_with = utils.starts_with
-local is_dir = utils.is_dir
+local fs = require("pl.path")
+local strx = require("pl.stringx")
 
 local function is_white(face)
     return face:find("Lib")
@@ -17,8 +15,8 @@ local function depth_limit(depth)
 end
 
 local function is_unimportant(face)
-    return starts_with(face, '.')
-        or starts_with(face, '_')
+    return strx.startswith(face, '.')
+        or strx.startswith(face, '_')
 end
 
 local function is_important(face)
@@ -36,7 +34,7 @@ end
 
 
 local function noticeable(base, face)
-    return  is_dir(base, face)
+    return  fs.isdir(fs.join(base, face))
         and is_important(face)
         and (is_concise(face) or is_white(face))
         and not is_black(face)

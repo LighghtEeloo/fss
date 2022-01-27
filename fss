@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 local fs = require("pl.path")
-local utils = require("utils")
+local strx = require("pl.stringx")
 
 local home_dir = os.getenv("HOME")
 local config_dir = fs.join(home_dir, ".config", "fss")
@@ -14,13 +14,10 @@ local noticeable = rc.noticeable
 local expandable = rc.expandable
 local depth_limit = rc.depth_limit
 
-local starts_with = utils.starts_with
-local split = utils.split
-
 Pattern = {}
 
 function Pattern:new(cons)
-    local pat = split(cons, ".")
+    local pat = strx.split(cons, ".")
     setmetatable(pat, self)
     self.__index = self
     return pat
@@ -79,7 +76,7 @@ end
 -- main
 local function main()
     if #arg < 1 then
-        io.stderr:write("usage:\tlua ", arg[0], " <PATTERNS> <PATH>{ <PATH>}\n")
+        io.stderr:write("usage:\tlua "..arg[0].." <PATTERNS> <PATH>{ <PATH>}\n")
         io.stderr:write("where:\t<PATH>     ::= / | /<name>{/<name>} | <name>{/<name>}\n")
         io.stderr:write("      \t<PATTERNS> ::= <PATTERN>{,<PATTERN>}\n")
         io.stderr:write("      \t<PATTERN>  ::= <cstr>{.<cstr>}\n")
@@ -100,7 +97,7 @@ local function main()
         return 1
     end
     local pats = {}
-    for _, p in ipairs(split(arg[1], ",")) do
+    for _, p in ipairs(strx.split(arg[1], ",")) do
         local pat = Pattern:new(p)
         table.insert(pats, pat)
     end
@@ -111,7 +108,7 @@ local function main()
     for _, pat in ipairs(pats) do
         for i=2,#arg do
             local path = arg[i]
-            if not starts_with(arg[i], '/') then
+            if not strx.startswith(arg[i], '/') then
                 path = fs.currentdir()..'/'..path
             end
             local res_ = search(pat, path)
