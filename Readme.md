@@ -19,7 +19,7 @@ luarocks install fss
 Note `{}` means repeat 0 or any times, ` | ` means either.
 
 ```
-usage:  lua /home/lighght/Xpace/fss/fss.lua <PATTERNS> <PATH>{ <PATH>}
+usage:  fss <PATTERNS> <PATH>{ <PATH>}
 where:  <PATH>     ::= / | /<name>{/<name>} | <name>{/<name>}
         <PATTERNS> ::= <PATTERN>{,<PATTERN>}
         <PATTERN>  ::= <cstr>{.<cstr>
