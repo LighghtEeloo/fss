@@ -8,6 +8,12 @@ fss is not:
 - `find`, `fd`: don't provide powerful options or search speed
 - `grep`, `rg`: use extremely plain parsing rules, limited for only daily usage
 
+## setup
+
+```bash
+luarocks install fss
+```
+
 ## man
 
 Note `{}` means repeat 0 or any times, ` | ` means either.
