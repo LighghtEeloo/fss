@@ -9,12 +9,19 @@ is a short lua utility for lightweight daily fs search.
 
 ## setup
 
+install via luarocks
 ```bash
-# install via luarocks or clone and directly use
 luarocks install fss
 ```
 
-to customize yourself,
+clone and manually install
+```bash
+git clone git@github.com:LighghtEeloo/fss.git
+cd fss
+sudo luarocks make
+```
+
+customize by yourself
 
 ```bash
 # config
