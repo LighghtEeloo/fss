@@ -46,6 +46,7 @@ build = {
          [ "fop" ] = "fop",
          [ "fcd" ] = "fcd",
          [ "fco" ] = "fco",
+         [ "fnv" ] = "fnv",
          [ "fog" ] = "fog",
       }
    }

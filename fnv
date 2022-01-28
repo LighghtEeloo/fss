@@ -1,0 +1,9 @@
+#!/usr/bin/env lua
+
+local cmd = "fss"
+for i=1,#arg do
+    cmd = "'"..cmd.."'".." "..arg[i];
+end
+cmd = cmd.." | fop nvim"
+
+os.execute(cmd)
