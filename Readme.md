@@ -10,7 +10,7 @@ is a short lua utility for lightweight daily fs search.
 
 ## intro
 - `fss`: search paths with patterns, and print to stdout
-- `fdope`: read stdin line by line and open with `xdg-open`
+- `fxg`: read stdin line by line and open with `xdg-open`
 - `fog`: combination of both; same cmd args as fss and use `xdg-open`
 
 ## setup
