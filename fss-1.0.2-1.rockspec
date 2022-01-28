@@ -43,7 +43,8 @@ build = {
    install = {
       bin = {
          [ "fss" ] = "fss",
-         [ "fxg" ] = "fxg",
+         [ "fop" ] = "fop",
+         [ "fcd" ] = "fcd",
          [ "fog" ] = "fog",
       }
    }

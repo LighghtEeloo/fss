@@ -1,9 +1,10 @@
 #!/usr/bin/env lua
 
 local function main()
+    local cmd = arg[1] or "cd"
     for path in io.stdin:lines() do
         print(path)
-        os.execute("xdg-open '"..path.."' &>/dev/null")
+        os.execute(cmd.." '"..path.."' &>/dev/null")
     end
 end
 
