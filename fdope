@@ -1,0 +1,10 @@
+#!/usr/bin/env lua
+
+local function main()
+    for path in io.stdin:lines() do
+        print(path)
+        os.execute("xdg-open '"..path.."' &>/dev/null")
+    end
+end
+
+os.exit(main())

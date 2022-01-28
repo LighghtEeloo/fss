@@ -6,7 +6,7 @@ local strx = require("pl.stringx")
 local home_dir = os.getenv("HOME")
 local config_dir = fs.join(home_dir, ".config", "fss")
 if fs.exists(config_dir) then
-    package.path = package.path..";"..config_dir.."?.lua"
+    package.path = config_dir.."/?.lua"..";"..package.path
 end
 local rc = require("rc")
 
