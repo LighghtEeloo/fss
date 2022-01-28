@@ -7,6 +7,11 @@ is a short lua utility for lightweight daily fs search.
 - `find`, `fd`: don't provide powerful options or search speed
 - `grep`, `rg`: use extremely plain parsing rules, limited for only daily usage
 
+## intro
+- `fss`: search paths with patterns, and print to stdout
+- `fdope`: read stdin line by line and open with `xdg-open`
+- `fog`: combination of both; same cmd args as fss and use `xdg-open`
+
 ## setup
 
 install via luarocks
