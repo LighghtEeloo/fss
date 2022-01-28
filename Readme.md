@@ -6,6 +6,7 @@ is a short lua utility for lightweight daily fs search.
 
 - `find`, `fd`: don't provide powerful options or search speed
 - `grep`, `rg`: use extremely plain parsing rules, limited for only daily usage
+- `fzf`: lightweight and no interaction, you should know what you want, just lazy
 
 ## intro
 - `fss`: search paths with patterns, and print to stdout
