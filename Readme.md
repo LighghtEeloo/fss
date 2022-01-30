@@ -11,10 +11,6 @@ is a short lua utility for lightweight daily fs search.
 ## intro
 - `fss`: search paths with patterns, and print to stdout
 - `fop`: read stdin line by line and open with `arg[1]`
-- `fcd`: combination of both; same cmd args as fss and `cd`
-- `fco`: combination of both; same cmd args as fss and `code`
-- `fnv`: combination of both; same cmd args as fss and `nvim`
-- `fog`: combination of both; same cmd args as fss and use `xdg-open`
 
 ## setup
 

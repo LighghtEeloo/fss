@@ -1,8 +1,8 @@
 package = "fss"
-version = "1.2-0"
+version = "1.3-0"
 source = {
    url = "git://github.com/LighghtEeloo/fss",
-   tag = "v1.2-0"
+   tag = "v1.3-0"
 }
 description = {
    summary = "Lightweight cmdline fs search.",
@@ -44,10 +44,6 @@ build = {
       bin = {
          [ "fss" ] = "fss",
          [ "fop" ] = "fop",
-         [ "fcd" ] = "fcd",
-         [ "fco" ] = "fco",
-         [ "fnv" ] = "fnv",
-         [ "fog" ] = "fog",
       }
    }
 }
