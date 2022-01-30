@@ -1,8 +1,8 @@
 package = "fss"
-version = "1.3-0"
+version = "1.3-1"
 source = {
    url = "git://github.com/LighghtEeloo/fss",
-   tag = "v1.3-0"
+   tag = "v1.3-1"
 }
 description = {
    summary = "Lightweight cmdline fs search.",
